@@ -153,7 +153,7 @@ public class Controller  {
 
     // פונקציה זו מייצגת את המהלך הראשון של השחקן
     public void select(Integer rowIndex, Integer colIndex){
-    //מציג את הכפתורים שהמשתמש יכול לבחור
+    //מציג את הכפתורים שהמשתמש יכול לבחור.
     selectSource = new Position(colIndex, rowIndex);
 
     if (myArraySource1.stream().filter((position) -> position.x== selectSource.x && position.y== selectSource.y).anyMatch(position -> true) ){
