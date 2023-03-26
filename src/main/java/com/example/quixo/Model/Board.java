@@ -36,18 +36,20 @@ public class Board {
     }
 
     public ArrayList<Position> getPlayableDestinations(int boardSize, Position point) {
+        //צור ArrayList ריק כדי לאחסן את המיקומים האפשריים שהשחקן יכול לעבור אליהם
         ArrayList<Position> playableDestinations = new ArrayList<Position>();
-
+        //בדוק אם המיקום הנוכחי נמצא בשורה הראשונה או האחרונה של הלוח
         if (isFirstRow(point.getX()) || isLastRow(point.getX())) {
+            //אם המיקום הנוכחי נמצא גם בעמודה הראשונה או האחרונה של הלוח, הוסף שתי עמדות ל-PlayableDestinations
             if (isFirstRow(point.getY()) || isLastRow(point.getY())) {
                 playableDestinations.add(new Position(point.getX(), 4 - point.getY()));
                 playableDestinations.add(new Position(4 - point.getX(), point.getY()));
-            } else {
+            } else {//אם המיקום הנוכחי אינו בעמודה הראשונה או האחרונה
                 playableDestinations.add(new Position(4 - point.getX(), point.getY()));
                 playableDestinations.add(new Position(point.getX(), 0));
                 playableDestinations.add(new Position(point.getX(), 4));
             }
-        } else {
+        } else {//אם המיקום הנוכחי אינו בשורה הראשונה או האחרונה של הלוח
             playableDestinations.add(new Position(4, point.getY()));
             playableDestinations.add(new Position(0, point.getY()));
             playableDestinations.add(new Position(point.getX(), 4 - point.getY()));
@@ -56,6 +58,7 @@ public class Board {
         return playableDestinations;
     }
 
+    //מדפיס את המצב הנוכחי של לוח משחק
     public void printBoard() {
         System.out.println();
         for (int i = 0; i < 5; i++) {
@@ -73,6 +76,7 @@ public class Board {
 
     }
 
+    //מחזירה ArrayList של אובייקטי מיקום המייצגים את המיקומים הניתנים להפעלה על לוח המשחק.
     public ArrayList<Position> getPlayableSources(int player) {
         ArrayList<Position> playableSources = new ArrayList<Position>();
         for (int i = 0; i < 5; i++) {

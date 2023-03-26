@@ -21,27 +21,25 @@ public class PlayerAI {
         // מחזיר את המהלכים שניתן לשחק עבור הAI
         Board board = new Board();
         int[][] gameTemp = cloneGame(game); //clone the table
-        ArrayList<Position> bestChoice = new ArrayList<>(2);
+        ArrayList<Position> bestChoice = new ArrayList<>(2);//המהלכים הטובים ביותר
         int minVal = rd.nextInt();
 
 
         // ליצור עותק מערך
         board.setGame(cloneGame(game));
 
-        ArrayList<Position> movables = board.getPlayableSources(playerTurn);//מציאת הריבועים שהAI  כן יכול לשחק איתם
+        ArrayList<Position> movables = board.getPlayableSources(playerTurn);//למצוא את העמדות הניתנות להפעלה עבור ה-AI
         for (Integer i = 0; i < movables.size(); i++) {
             // מאפס את הלוח עבור כל ריבוע שניתן לשחק ולהימנע משגיאות
 
             board.setGame(cloneGame(game));
-            ArrayList<Position> destinations = board.getPlayableDestinations(5,movables.get(i));
+            ArrayList<Position> destinations = board.getPlayableDestinations(5,movables.get(i));//מוצא את היעדים שניתן לשחק עבור כל עמדה ניתנת להזזה
             for (int j = 0; j < destinations.size(); j++ ) {
-                move(movables.get(i), destinations.get(j), this.playerTurn, board.getGame());
+                move(movables.get(i), destinations.get(j), this.playerTurn, board.getGame());//מבצע מעבר מהמיקום הנייד הנוכחי ליעד הנוכחי
                     // קורא לחיפוש היוריסטי כדי לאחזר את הערך הטוב ביותר אם אנחנו מתכוונים לבצע את המהלך הזה(destination.
                 int scoreRand = heuristicSearch(cloneGame(board.getGame()),2,this.playerTurn );
 
-                // תנאי זה משמש להפחתת שניים מהניקוד הסופי אם התיבה שנבחרה כבר מכילה תיבת שחקן.
-                // הצענו שלשחקן יש סיכוי גבוה יותר לנצח אם הוא יעשה מהלך חדש .
-
+                //לקבוע אם המהלך הנוכחי טוב יותר מהמהלך הטוב ביותר הנוכחי, ולעדכן את bestChoice ArrayList במידת הצורך
                 if (scoreRand>minVal || (i==0&&j==0)){
                     minVal = scoreRand;
                     bestChoice.add(0, movables.get(i));
